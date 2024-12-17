@@ -1,0 +1,23 @@
+ create database carparkdb;
+
+CREATE TABLE car_parks (
+       id BIGINT AUTO_INCREMENT PRIMARY KEY,
+       car_park_number VARCHAR(50) NOT NULL UNIQUE
+       address VARCHAR(255) NOT NULL,
+       latitude DOUBLE NOT NULL,
+       longitude DOUBLE NOT NULL,
+       total_lots INT NOT NULL
+    );
+
+CREATE TABLE availability (
+       car_park_id BIGINT PRIMARY KEY,
+       available_lots INT NOT NULL,
+       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+       FOREIGN KEY (car_park_id) REFERENCES car_parks(id) ON DELETE CASCADE
+    );
+
+ALTER TABLE availability
+    ADD CONSTRAINT fk_car_park
+    FOREIGN KEY (car_park_id)
+    REFERENCES car_parks(id)
+    ON DELETE CASCADE;
